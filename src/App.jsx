@@ -1,10 +1,11 @@
 import './App.css';
+import Cards from './components/Cards/Cards';
 
 function App() {
 
   return (
     <>
-     <h1 className="bg-red-500">Hola Mundo!</h1>
+     <Cards/>
     </>
   )
 }
