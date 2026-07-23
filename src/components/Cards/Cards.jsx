@@ -6,7 +6,7 @@ console.log(data);
 
 function Cards(){
     return(
-        <main className="w-full min-h-screen bg-Rose-100 flex flex-col items-center gap-4 pt-10 font-Redhat">
+        <main className="w-full min-h-screen flex flex-col items-center gap-4 pt-10 font-Redhat">
             <CardsTitle/>
             {data.map((dessert) =>{
                 return <Card 
