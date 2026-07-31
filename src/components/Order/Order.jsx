@@ -4,7 +4,7 @@ import OrderButton from "./OrderButton";
 
 function Order(){
     return(
-        <section className="w-full h-150 flex flex-col gap-4 p-6 rounded-2xl bg-Rose-50">
+        <section className="max-w-80 h-150 flex flex-col gap-4 p-6 rounded-2xl bg-Rose-50">
             <OrderHeader/>
             <OrderItems/>
             <OrderButton/>

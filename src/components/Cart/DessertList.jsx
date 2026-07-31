@@ -1,9 +1,9 @@
 import DessertInfo from "./DessertInfo"
 
-function DessertList(){
+function DessertList({name, quantity, price}){
     return(
         <ul className="w-60">
-            <DessertInfo name={"Classic Tiramisu"} quantity={1} price={5.50}/>
+            <DessertInfo name={name} quantity={quantity} price={price}/>
         </ul>
     )
 }
