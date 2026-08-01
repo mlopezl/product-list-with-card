@@ -3,14 +3,15 @@ import CardButton from "./CardButton";
 import QuantityButton from "./QuantityButton";
 
 
-function CardImage({image, imageName}){
+function CardImage({image, name, addToCart}){
     const [isClicked, setIsClicked] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
-    const addToCart = () => {
-        setIsClicked(true);
-        setQuantity(1);
-    };
+    const handleAdd = () => {
+    setIsClicked(true);
+    setQuantity(1);
+    addToCart(name);
+};
 
     const addQuantity = () => {
         setQuantity(prev => prev + 1);
@@ -32,9 +33,9 @@ function CardImage({image, imageName}){
     return(
         <div className="w-70 relative">
             <img className={`w-full rounded-lg
-                ${isClicked ? "border-2 border-Red" : "boder-none"}`} src={image} alt={imageName} />
-            <CardButton isClicked={isClicked} isHidden={addToCart}/>
-            <QuantityButton quantity={quantity} addQuantity={addQuantity} subtractQuantity={subtractQuantity}/>
+                ${isClicked ? "border-2 border-Red" : "boder-none"}`} src={image} alt={name} />
+            <CardButton isClicked={isClicked} isHidden={handleAdd}/>
+            <QuantityButton quantity={quantity} addQuantity={addQuantity} subtractQuantity={subtractQuantity} addToCart={addToCart} name={name}/>
         </div>
     )
 }

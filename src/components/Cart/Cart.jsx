@@ -6,7 +6,7 @@ import CartMessage from "./CartMessage";
 import CartButton from "./CartButton";
 import { useState, useEffect } from "react";
 
-function Cart({ cart }) {
+function Cart({ cart, isCompleted }) {
   const [amount, setAmount] = useState(0);
 
   const calculateAmount = () => {
@@ -29,27 +29,16 @@ function Cart({ cart }) {
   return (
     <section className="bg-Rose-50 w-70 min-h-65 p-4 rounded-lg mb-10 flex flex-col items-center gap-4">
       <CartTitle amount={calculateAmount()} />
-      {amount ? (
-        cart.map((item) => {
-          return (
-            <div
-              className="flex flex-col gap-4 items-center"
-              key={item.dessert.name}
-            >
-              <DessertList name={item.dessert.name} quantity={item.quantity} price={item.dessert.price} />
-            </div>
-          );
-        })
-      ) : (
+      {amount ? 
+        <>
+          <DessertList cart={cart}/>
+          <CartTotal total={calculateTotal()}/>
+          <CartMessage />
+          <CartButton isCompleted={isCompleted} />
+        </>
+      : (
         <CartEmpty />
       )}
-      {amount ? (
-        <>
-          <CartTotal total={calculateTotal()} />
-          <CartMessage />
-          <CartButton />
-        </>
-      ) : null}
     </section>
   );
 }

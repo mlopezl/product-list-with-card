@@ -2,9 +2,7 @@ import Card from "./Card";
 import CardsTitle from "./CardsTitle";
 import data from '../../../data.json';
 
-console.log(data);
-
-function Cards(){
+function Cards({addToCart}){
     return(
         <main className="w-full min-h-screen flex flex-col items-center gap-4 pt-10 font-Redhat">
             <CardsTitle/>
@@ -14,7 +12,8 @@ function Cards(){
                 image={dessert.image.mobile} 
                 name={dessert.name} 
                 category={dessert.category}
-                price={dessert.price}/>
+                price={dessert.price}
+                addToCart={addToCart}/>
             })}
         </main>
     )

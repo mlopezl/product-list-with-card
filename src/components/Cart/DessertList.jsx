@@ -1,9 +1,15 @@
 import DessertInfo from "./DessertInfo"
 
-function DessertList({name, quantity, price}){
+function DessertList({cart}){
     return(
         <ul className="w-60">
-            <DessertInfo name={name} quantity={quantity} price={price}/>
+            {
+               cart.map(item => {
+                return(
+                    <DessertInfo key={item.dessert.name} name={item.dessert.name} quantity={item.quantity} price={item.dessert.price}/>
+                )
+               })
+            }
         </ul>
     )
 }
