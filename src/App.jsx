@@ -12,14 +12,12 @@ function App() {
   const addToCart = (name) =>{
     const item = desserts.find(item => item.name === name);
     const cartItem = cart.find(cartItem => cartItem.dessert.name === name);
-    console.log(cart);
     if(!cartItem){
      const  newItem = {
         quantity: 1,
         dessert: item
       }
       setCart(prevCart => [...prevCart, newItem]);
-      console.log(cart);
     } else{
       setCart(prevCart =>
       prevCart.map(cartItem =>
@@ -31,6 +29,33 @@ function App() {
     }
   }
 
+  const deleteFromCart = (name) => {
+  const cartItem = cart.find(
+    item => item.dessert.name === name
+  );
+
+  if (!cartItem) return;
+
+  if (cartItem.quantity === 1) {
+    setCart(prevCart =>
+      prevCart.filter(
+        item => item.dessert.name !== name
+      )
+    );
+  } else {
+    setCart(prevCart =>
+      prevCart.map(item =>
+        item.dessert.name === name
+          ? {
+              ...item,
+              quantity: item.quantity - 1
+            }
+          : item
+      )
+    );
+  }
+};
+
   const completeOrder = () =>{
     setIsCompleted(true);
   }
@@ -40,14 +65,20 @@ function App() {
     setCart([]);
   }
 
+  const calculateTotal = () =>{
+      return cart.reduce((total, dessert) =>{
+          return total += dessert.quantity * dessert.dessert.price;
+      }, 0)
+    }
+
   return (
     <div className="w-full flex flex-col gap-6 justify-center items-center bg-Rose-100 relative">
       {
         isCompleted ?
-        <Order cart={cart} startNewOrder={startNewOrder} /> :
+        <Order cart={cart} startNewOrder={startNewOrder} calculateTotal={calculateTotal}/> :
         <>
-        <Cards addToCart={addToCart} />
-        <Cart cart={cart} isCompleted={completeOrder} />
+        <Cards addToCart={addToCart} deleteFromCart={deleteFromCart} cart={cart}/>
+        <Cart cart={cart} isCompleted={completeOrder} calculateTotal={calculateTotal}/>
         </>
       }
       

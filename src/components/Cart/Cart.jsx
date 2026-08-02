@@ -4,35 +4,19 @@ import DessertList from "./DessertList";
 import CartTotal from "./CartTotal";
 import CartMessage from "./CartMessage";
 import CartButton from "./CartButton";
-import { useState, useEffect } from "react";
 
-function Cart({ cart, isCompleted }) {
-  const [amount, setAmount] = useState(0);
-
-  const calculateAmount = () => {
-    return cart.reduce((amount, dessert) => {
-      return (amount += dessert.quantity);
-    }, 0);
-  };
-
-  const calculateTotal = () =>{
-    return cart.reduce((total, dessert) =>{
-        return total += dessert.quantity * dessert.dessert.price;
-    }, 0)
-  }
-
-  useEffect(() => {
-    const newAmount = calculateAmount();
-    setAmount(newAmount);
-  }, [amount]);
+function Cart({ cart, isCompleted, calculateTotal }) {
+  const amount = cart.reduce((total, dessert) => {
+  return total + dessert.quantity;
+}, 0);
 
   return (
     <section className="bg-Rose-50 w-70 min-h-65 p-4 rounded-lg mb-10 flex flex-col items-center gap-4">
-      <CartTitle amount={calculateAmount()} />
+      <CartTitle amount={amount} />
       {amount ? 
         <>
           <DessertList cart={cart}/>
-          <CartTotal total={calculateTotal()}/>
+          <CartTotal calculateTotal={calculateTotal}/>
           <CartMessage />
           <CartButton isCompleted={isCompleted} />
         </>

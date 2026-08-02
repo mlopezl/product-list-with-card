@@ -1,7 +1,7 @@
-function DecrementButton({decrementQuantity}){
+function DecrementButton({deleteFromCart, name}){
     return(
          <span
-         onClick={decrementQuantity}
+         onClick={() => deleteFromCart(name)}
          className="w-4 h-4 flex justify-center items-center rounded-full border-1 border-Rose-50">
                 <img src="/assets/images/icon-decrement-quantity.svg" alt="" />
          </span>
