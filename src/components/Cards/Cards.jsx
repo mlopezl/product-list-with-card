@@ -4,9 +4,10 @@ import data from '../../../data.json';
 
 function Cards({addToCart, deleteFromCart, cart}){
     return(
-        <main className="w-full min-h-screen flex flex-col items-center gap-4 pt-10 font-Redhat">
+        <main className="w-full max-w-230 min-h-screen flex flex-col justify-center items-center p-4 gap-4 pt-10 font-Redhat ">
             <CardsTitle/>
-            {data.map((dessert) =>{
+            <div className="max-w-180 flex flex-col items-center justify-center pt-4 gap-4 sm:flex-row sm:flex-wrap md:max-w-250 md:gap-2">
+                {data.map((dessert) =>{
                 const cartItem = cart.find(
         item => item.dessert.name === dessert.name
     );
@@ -22,6 +23,7 @@ function Cards({addToCart, deleteFromCart, cart}){
                 quantity={cartItem?.quantity ?? 0}
                 />
             })}
+            </div>
         </main>
     )
 }

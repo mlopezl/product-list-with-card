@@ -11,7 +11,7 @@ function Cart({ cart, isCompleted, calculateTotal }) {
 }, 0);
 
   return (
-    <section className="bg-Rose-50 w-70 min-h-65 p-4 rounded-lg mb-10 flex flex-col items-center gap-4">
+    <section className="bg-Rose-50 w-70 min-h-65 p-4 rounded-lg mb-10 flex flex-col items-center gap-4 lg:m-12 lg:w-80">
       <CartTitle amount={amount} />
       {amount ? 
         <>

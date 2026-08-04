@@ -72,7 +72,7 @@ function App() {
     }
 
   return (
-    <div className="w-full flex flex-col gap-6 justify-center items-center bg-Rose-100 relative">
+    <div className="w-full flex flex-col p-4 gap-6 justify-center items-center bg-Rose-100 relative lg:flex-row lg:flex-wrap lg:items-start lg:gap-0">
       {
         isCompleted ?
         <Order cart={cart} startNewOrder={startNewOrder} calculateTotal={calculateTotal}/> :
