@@ -2,7 +2,7 @@ import OrderItem from './OrderItem'
 
 function OrderItems({cart}){
     return(
-        <ul className="flex flex-col gap-4 bg-Rose-100 p-4 rounded-lg">
+        <ul className="w-full flex flex-col gap-4 bg-Rose-100 p-4 rounded-lg">
             {
                cart.map(item => {
                 return(

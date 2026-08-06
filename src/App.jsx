@@ -2,7 +2,7 @@ import "./App.css";
 import Cards from "./components/Cards/Cards";
 import Cart from "./components/Cart/Cart";
 import Order from "./components/Order/Order";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import desserts from "../data.json";
 
 function App() {
@@ -28,6 +28,14 @@ function App() {
     );
     }
   }
+
+  const deleteElementFromCart = (name) => {
+  setCart(prevCart =>
+    prevCart.filter(
+      item => item.dessert.name !== name
+    )
+  );
+};
 
   const deleteFromCart = (name) => {
   const cartItem = cart.find(
@@ -71,18 +79,23 @@ function App() {
       }, 0)
     }
 
+   useEffect(() => {
+    window.scrollTo(0,0);
+  }, [isCompleted]);
+
   return (
-    <div className="w-full flex flex-col p-4 gap-6 justify-center items-center bg-Rose-100 relative lg:flex-row lg:flex-wrap lg:items-start lg:gap-0">
-      {
+    <>
+      <div className={`w-full flex min-h-screen flex-col p-4 gap-6 justify-center items-center bg-Rose-100 relative lg:flex-row lg:flex-wrap lg:items-start lg:gap-0
+        ${isCompleted ? "brightness-50" : "brightness-100"}`}>
+        <Cards addToCart={addToCart} deleteFromCart={deleteFromCart} cart={cart}/>
+        <Cart cart={cart} isCompleted={completeOrder} calculateTotal={calculateTotal} deleteElementFromCart={deleteElementFromCart}/>      
+    </div>
+     {
         isCompleted ?
         <Order cart={cart} startNewOrder={startNewOrder} calculateTotal={calculateTotal}/> :
-        <>
-        <Cards addToCart={addToCart} deleteFromCart={deleteFromCart} cart={cart}/>
-        <Cart cart={cart} isCompleted={completeOrder} calculateTotal={calculateTotal}/>
-        </>
+        null
       }
-      
-    </div>
+    </>
   );
 }
 
