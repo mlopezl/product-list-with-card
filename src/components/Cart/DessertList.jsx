@@ -2,7 +2,7 @@ import DessertInfo from "./DessertInfo"
 
 function DessertList({cart, deleteElementFromCart}){
     return(
-        <ul className="w-60">
+        <ul className="w-60 flex flex-col gap-2">
             {
                cart.map(item => {
                 return(

@@ -13,3 +13,32 @@
   --color-Rose-900: hsl(14, 65%, 9%);
   --font-Redhat: "Red Hat Text", sans-serif;
 }
+
+@keyframes pop {
+    0% {
+        transform: scale(0.8);
+    }
+
+    50% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-pop {
+    animation: pop .2s ease;
+}
+
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

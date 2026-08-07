@@ -4,97 +4,139 @@ import Cart from "./components/Cart/Cart";
 import Order from "./components/Order/Order";
 import { useState, useEffect } from "react";
 import desserts from "../data.json";
+import { AnimatePresence, motion } from "motion/react";
 
 function App() {
   const [cart, setCart] = useState([]);
-  const [isCompleted, setIsCompleted] =  useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
-  const addToCart = (name) =>{
-    const item = desserts.find(item => item.name === name);
-    const cartItem = cart.find(cartItem => cartItem.dessert.name === name);
-    if(!cartItem){
-     const  newItem = {
+  const addToCart = (name) => {
+    const item = desserts.find((item) => item.name === name);
+    const cartItem = cart.find((cartItem) => cartItem.dessert.name === name);
+    if (!cartItem) {
+      const newItem = {
         quantity: 1,
-        dessert: item
-      }
-      setCart(prevCart => [...prevCart, newItem]);
-    } else{
-      setCart(prevCart =>
-      prevCart.map(cartItem =>
-        cartItem.dessert.name === name
-          ? { ...cartItem, quantity: cartItem.quantity + 1 }
-          : cartItem
-      )
-    );
+        dessert: item,
+      };
+      setCart((prevCart) => [...prevCart, newItem]);
+    } else {
+      setCart((prevCart) =>
+        prevCart.map((cartItem) =>
+          cartItem.dessert.name === name
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem,
+        ),
+      );
     }
-  }
+  };
 
   const deleteElementFromCart = (name) => {
-  setCart(prevCart =>
-    prevCart.filter(
-      item => item.dessert.name !== name
-    )
-  );
-};
+    setCart((prevCart) =>
+      prevCart.filter((item) => item.dessert.name !== name),
+    );
+  };
 
   const deleteFromCart = (name) => {
-  const cartItem = cart.find(
-    item => item.dessert.name === name
-  );
+    const cartItem = cart.find((item) => item.dessert.name === name);
 
-  if (!cartItem) return;
+    if (!cartItem) return;
 
-  if (cartItem.quantity === 1) {
-    setCart(prevCart =>
-      prevCart.filter(
-        item => item.dessert.name !== name
-      )
-    );
-  } else {
-    setCart(prevCart =>
-      prevCart.map(item =>
-        item.dessert.name === name
-          ? {
-              ...item,
-              quantity: item.quantity - 1
-            }
-          : item
-      )
-    );
-  }
-};
+    if (cartItem.quantity === 1) {
+      setCart((prevCart) =>
+        prevCart.filter((item) => item.dessert.name !== name),
+      );
+    } else {
+      setCart((prevCart) =>
+        prevCart.map((item) =>
+          item.dessert.name === name
+            ? {
+                ...item,
+                quantity: item.quantity - 1,
+              }
+            : item,
+        ),
+      );
+    }
+  };
 
-  const completeOrder = () =>{
+  const completeOrder = () => {
     setIsCompleted(true);
-  }
+  };
 
-  const startNewOrder = () =>{
+  const startNewOrder = () => {
     setIsCompleted(false);
     setCart([]);
-  }
+  };
 
-  const calculateTotal = () =>{
-      return cart.reduce((total, dessert) =>{
-          return total += dessert.quantity * dessert.dessert.price;
-      }, 0)
-    }
+  const calculateTotal = () => {
+    return cart.reduce((total, dessert) => {
+      return (total += dessert.quantity * dessert.dessert.price);
+    }, 0);
+  };
 
-   useEffect(() => {
-    window.scrollTo(0,0);
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, [isCompleted]);
 
   return (
     <>
-      <div className={`w-full flex min-h-screen flex-col p-4 gap-6 justify-center items-center bg-Rose-100 relative lg:flex-row lg:flex-wrap lg:items-start lg:gap-0
-        ${isCompleted ? "brightness-50" : "brightness-100"}`}>
-        <Cards addToCart={addToCart} deleteFromCart={deleteFromCart} cart={cart}/>
-        <Cart cart={cart} isCompleted={completeOrder} calculateTotal={calculateTotal} deleteElementFromCart={deleteElementFromCart}/>      
-    </div>
-     {
-        isCompleted ?
-        <Order cart={cart} startNewOrder={startNewOrder} calculateTotal={calculateTotal}/> :
-        null
-      }
+      <div
+        className={`w-full flex min-h-screen flex-col p-4 gap-6 justify-center items-center bg-Rose-100 relative lg:flex-row lg:flex-wrap lg:items-start lg:gap-0
+        ${isCompleted ? "brightness-50" : "brightness-100"}`}
+      >
+        <Cards
+          addToCart={addToCart}
+          deleteFromCart={deleteFromCart}
+          cart={cart}
+        />
+        <Cart
+          cart={cart}
+          isCompleted={completeOrder}
+          calculateTotal={calculateTotal}
+          deleteElementFromCart={deleteElementFromCart}
+        />
+      </div>
+
+      <AnimatePresence mode="wait">
+        {isCompleted ? (
+          <motion.div
+            key="order-modal"
+            className="fixed inset-0 bg-black/50 flex justify-center items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.2,
+              ease: "easeOut",
+            }}
+          >
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.98,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.98,
+              }}
+              transition={{
+                duration: 0.2,
+                ease: "easeOut",
+              }}
+            >
+              <Order
+                cart={cart}
+                startNewOrder={startNewOrder}
+                calculateTotal={calculateTotal}
+              />
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }
